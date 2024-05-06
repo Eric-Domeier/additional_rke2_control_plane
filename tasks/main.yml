@@ -24,7 +24,7 @@
     - name: Start the rke2-server service
       systemd:
         name: rke2-server
-        state: started
+        state: restarted
 
     - name: Add PATH variable to /etc/profile
       lineinfile:

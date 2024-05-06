@@ -1,3 +1,8 @@
+server: https://{{ load_balancer }}:9345
+token: {{ hostvars[groups['rke2_initial_control_plane'][0]].server_token.content | b64decode | default(server_token) }}
 tls-san:
   - "{{ load_balancer }}"
+{% for host in groups['rke2_control_plane'] %}
+  - "{{ hostvars[host]['ansible_facts']['eth0']['ipv4']['address'] }}"
+{% endfor %}
 write-kubeconfig-mode: "0644"
